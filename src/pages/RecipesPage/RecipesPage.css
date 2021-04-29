@@ -1,0 +1,10 @@
+
+.p-recipes .c-recipe {
+    height: 100%;
+}
+
+.p-recipes .c-recipe > img {
+    height: 250px;
+    object-fit: cover;
+}
+
