@@ -1,10 +1,17 @@
 import React from 'react';
+import { Container } from 'react-bootstrap';
+import { Redirect } from 'react-router';
 
-function RecipesPage(props) {
+function RecipesPage({activeUser}) {
+
+    if (!activeUser) {
+        return <Redirect to="/"/>
+    }
+
     return (
-        <div>
-            RecipesPage
-        </div>
+        <Container>
+            <h1>{activeUser.fname}'s Recipes</h1>
+        </Container>
     );
 }
 

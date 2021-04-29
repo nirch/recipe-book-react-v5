@@ -26,7 +26,7 @@ function App() {
           <Route exact path="/signup" ><SignupPage/></Route>
           <Route exact path="/recipes" >
             <RecipeNavbar activeUser={activeUser} onLogout={() => setActiveUser(null)}/>
-            <RecipesPage/>
+            <RecipesPage activeUser={activeUser}/>
           </Route>
         </Switch>
       </HashRouter>
