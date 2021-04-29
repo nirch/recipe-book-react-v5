@@ -8,10 +8,13 @@ import RecipesPage from './pages/RecipesPage/RecipesPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import RecipeNavbar from './components/RecipeNavbar/RecipeNavbar';
 import { useState } from 'react';
+import usersJSON from './data/users.json'
+import UserModel from './model/UserModel';
 
 
 function App() {
-  const [activeUser, setActiveUser] = useState({id: "123", fname: "Nir", lname: "Channes", email: "nir@nir.com"});
+  const [users, setUsers] = useState(usersJSON.map(plainUser => new UserModel(plainUser)));
+  const [activeUser, setActiveUser] = useState(users[0]);
   // const [activeUser, setActiveUser] = useState(null);
 
   return (
@@ -22,7 +25,7 @@ function App() {
             <RecipeNavbar activeUser={activeUser} onLogout={() => setActiveUser(null)}/>
             <HomePage/>
           </Route>
-          <Route exact path="/login" component={LoginPage}></Route>
+          <Route exact path="/login"><LoginPage users={users}/></Route>
           <Route exact path="/signup" ><SignupPage/></Route>
           <Route exact path="/recipes" >
             <RecipeNavbar activeUser={activeUser} onLogout={() => setActiveUser(null)}/>
