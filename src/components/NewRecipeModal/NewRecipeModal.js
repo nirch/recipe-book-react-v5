@@ -5,19 +5,27 @@ import './NewRecipeModal.css'
 function NewRecipeModal({ show, onClose, onCreate }) {
     const [name, setName] = useState("");
     const [desc, setDesc] = useState("");
-    const [imgURL, setImgURL] = useState("");
+    const [img, setImg] = useState(null);
 
 
     function clearForm() {
         setName("");
         setDesc("");
-        setImgURL("");
+        setImg(null);
     }
 
     function createRecipe() {
-        onCreate(name, desc, imgURL);
+        onCreate(name, desc, img ? URL.createObjectURL(img) : "");
         clearForm();
         onClose();
+    }
+
+    function handleFileChange(e) {
+        if (e.target.files.length === 1) {
+            setImg(e.target.files[0]);
+        } else {
+            setImg(null);
+        }
     }
 
     return (
@@ -49,14 +57,13 @@ function NewRecipeModal({ show, onClose, onCreate }) {
 
                     <Form.Group as={Row} controlId="formHorizontalImg">
                         <Form.Label column sm={3}>
-                            Recipe Image URL
+                            Recipe Image
                         </Form.Label>
                         <Col sm={9}>
-                            <Form.Control type="text" placeholder="Recipe Image URL" 
-                                value={imgURL} onChange={e => setImgURL(e.target.value)}/>
+                            <Form.Control type="file" accept="image/*" onChange={handleFileChange}/>
                         </Col>
                     </Form.Group>
-                    <Image src={imgURL}/>
+                    <Image src={img ? URL.createObjectURL(img) : ""}/>
                 </Form>
             </Modal.Body>
             <Modal.Footer>
