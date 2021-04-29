@@ -1,9 +1,27 @@
-import React from 'react';
-import { Button, Modal, Form, Col, Row } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Button, Modal, Form, Col, Row, Image } from 'react-bootstrap';
+import './NewRecipeModal.css'
 
 function NewRecipeModal({ show, onClose }) {
+    const [name, setName] = useState("");
+    const [desc, setDesc] = useState("");
+    const [imgURL, setImgURL] = useState("");
+
+
+    function clearForm() {
+        setName("");
+        setDesc("");
+        setImgURL("");
+    }
+
+    function createRecipe() {
+        console.log(name, desc, imgURL); 
+        clearForm();
+        onClose();
+    }
+
     return (
-        <Modal show={show} onHide={onClose} size="lg">
+        <Modal show={show} onHide={onClose} size="lg" className="c-new-recipe">
             <Modal.Header closeButton>
                 <Modal.Title>New Recipe</Modal.Title>
             </Modal.Header>
@@ -14,7 +32,8 @@ function NewRecipeModal({ show, onClose }) {
                             Recipe Name
                         </Form.Label>
                         <Col sm={9}>
-                            <Form.Control type="text" placeholder="Recipe Name" />
+                            <Form.Control type="text" placeholder="Recipe Name" 
+                                value={name} onChange={e => setName(e.target.value)}/>
                         </Col>
                     </Form.Group>
 
@@ -23,7 +42,8 @@ function NewRecipeModal({ show, onClose }) {
                             Recipe Description
                         </Form.Label>
                         <Col sm={9}>
-                            <Form.Control type="text" placeholder="Recipe Description" />
+                            <Form.Control type="text" placeholder="Recipe Description" 
+                                value={desc} onChange={e => setDesc(e.target.value)}/>
                         </Col>
                     </Form.Group>
 
@@ -32,17 +52,18 @@ function NewRecipeModal({ show, onClose }) {
                             Recipe Image URL
                         </Form.Label>
                         <Col sm={9}>
-                            <Form.Control type="text" placeholder="Recipe Image URL" />
+                            <Form.Control type="text" placeholder="Recipe Image URL" 
+                                value={imgURL} onChange={e => setImgURL(e.target.value)}/>
                         </Col>
                     </Form.Group>
-
+                    <Image src={imgURL}/>
                 </Form>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={onClose}>
                     Cancel
                 </Button>
-                <Button variant="primary" onClick={onClose}>
+                <Button variant="primary" onClick={createRecipe}>
                     Create Recipe
                 </Button>
             </Modal.Footer>
