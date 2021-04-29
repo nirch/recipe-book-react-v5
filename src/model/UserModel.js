@@ -8,5 +8,9 @@ export default class UserModel {
         this.email = plainUser.email;
         this.#pwd = plainUser.pwd;
     }
+
+    login(email, pwd) {
+        return email.toLowerCase() === this.email.toLowerCase() && pwd === this.#pwd;
+    }
 } 
 

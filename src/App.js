@@ -25,7 +25,7 @@ function App() {
             <RecipeNavbar activeUser={activeUser} onLogout={() => setActiveUser(null)}/>
             <HomePage/>
           </Route>
-          <Route exact path="/login"><LoginPage users={users}/></Route>
+          <Route exact path="/login"><LoginPage activeUser={activeUser} users={users} onLogin={user => setActiveUser(user)}/></Route>
           <Route exact path="/signup" ><SignupPage/></Route>
           <Route exact path="/recipes" >
             <RecipeNavbar activeUser={activeUser} onLogout={() => setActiveUser(null)}/>
