@@ -4,12 +4,16 @@ import { Nav, Navbar } from 'react-bootstrap';
 function RecipeNavbar(props) {
     return (
         <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+        <Navbar.Brand href="#/">Recipe Book</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Link</Nav.Link>
+                <Nav.Link href="#/recipes">Recipes</Nav.Link>
+            </Nav>
+            <Nav className="ml-auto">
+                <Nav.Link href="#/login">Login</Nav.Link>
+                <Nav.Link href="#/signup">Signup</Nav.Link>
+                <Nav.Link href="#">Logout</Nav.Link>
             </Nav>
         </Navbar.Collapse>
         </Navbar>    
