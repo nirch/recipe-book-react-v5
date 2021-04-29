@@ -1,7 +1,7 @@
 import React from 'react';
 import { Nav, Navbar } from 'react-bootstrap';
 
-function RecipeNavbar({activeUser}) {
+function RecipeNavbar({activeUser, onLogout}) {
     return (
         <Navbar bg="light" expand="lg">
         <Navbar.Brand href="#/">Recipe Book</Navbar.Brand>
@@ -13,7 +13,7 @@ function RecipeNavbar({activeUser}) {
             <Nav className="ml-auto">
                 {!activeUser ? <Nav.Link href="#/login">Login</Nav.Link> : null}
                 {!activeUser ? <Nav.Link href="#/signup">Signup</Nav.Link> : null}
-                {activeUser ? <Nav.Link href="#">Logout</Nav.Link> : null}
+                {activeUser ? <Nav.Link href="#" onClick={() => onLogout()}>Logout</Nav.Link> : null}
             </Nav>
         </Navbar.Collapse>
         </Navbar>    
