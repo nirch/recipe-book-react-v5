@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { Redirect } from 'react-router';
+import NewRecipeModal from '../../components/NewRecipeModal/NewRecipeModal';
 import RecipeCard from '../../components/RecipeCard/RecipeCard';
 import './RecipesPage.css'
 
 function RecipesPage({activeUser, recipes}) {
+    const [showNewRecipeModal, setShowNewRecipeModal] = useState(false);
 
     if (!activeUser) {
         return <Redirect to="/"/>
@@ -14,8 +16,7 @@ function RecipesPage({activeUser, recipes}) {
         <Container className="p-recipes">
             <div className="heading">
                 <h1>{activeUser.fname}'s Recipes</h1>
-                <Button variant="link">New Recipe</Button>
-
+                <Button variant="link" onClick={() => setShowNewRecipeModal(true)}>New Recipe</Button>
             </div>
             <Row>
                 {recipes.map(recipe => 
@@ -24,6 +25,7 @@ function RecipesPage({activeUser, recipes}) {
                     </Col>
                 )}
             </Row>
+            <NewRecipeModal show={showNewRecipeModal} onClose={() => setShowNewRecipeModal(false)} />
         </Container>
     );
 }
