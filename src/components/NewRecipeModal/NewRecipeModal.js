@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Modal, Form, Col, Row, Image } from 'react-bootstrap';
 import './NewRecipeModal.css'
 
-function NewRecipeModal({ show, onClose }) {
+function NewRecipeModal({ show, onClose, onCreate }) {
     const [name, setName] = useState("");
     const [desc, setDesc] = useState("");
     const [imgURL, setImgURL] = useState("");
@@ -15,7 +15,7 @@ function NewRecipeModal({ show, onClose }) {
     }
 
     function createRecipe() {
-        console.log(name, desc, imgURL); 
+        onCreate(name, desc, imgURL);
         clearForm();
         onClose();
     }

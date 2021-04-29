@@ -5,7 +5,7 @@ import NewRecipeModal from '../../components/NewRecipeModal/NewRecipeModal';
 import RecipeCard from '../../components/RecipeCard/RecipeCard';
 import './RecipesPage.css'
 
-function RecipesPage({activeUser, recipes}) {
+function RecipesPage({activeUser, recipes, onNewRecipe}) {
     const [showNewRecipeModal, setShowNewRecipeModal] = useState(false);
 
     if (!activeUser) {
@@ -25,7 +25,7 @@ function RecipesPage({activeUser, recipes}) {
                     </Col>
                 )}
             </Row>
-            <NewRecipeModal show={showNewRecipeModal} onClose={() => setShowNewRecipeModal(false)} />
+            <NewRecipeModal show={showNewRecipeModal} onClose={() => setShowNewRecipeModal(false)} onCreate={onNewRecipe}/>
         </Container>
     );
 }
