@@ -8,17 +8,14 @@ import RecipesPage from './pages/RecipesPage/RecipesPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import RecipeNavbar from './components/RecipeNavbar/RecipeNavbar';
 import { useState } from 'react';
-import usersJSON from './data/users.json';
 import recipesJSON from './data/recipes.json';
 import UserModel from './model/UserModel';
 import RecipeModel from './model/RecipeModel';
 
 
 function App() {
-  const [users, setUsers] = useState(usersJSON.map(plainUser => new UserModel(plainUser)));
   const [recipes, setRecipes] = useState(recipesJSON.map(plainRecipe => new RecipeModel(plainRecipe)));
-  const [activeUser, setActiveUser] = useState(users[0]);
-  // const [activeUser, setActiveUser] = useState(null);
+  const [activeUser, setActiveUser] = useState(null);
 
   function addRecipe(name, desc, img) {
     const newRecipe = new RecipeModel({
@@ -41,7 +38,7 @@ function App() {
             <RecipeNavbar activeUser={activeUser} onLogout={() => setActiveUser(null)}/>
             <HomePage/>
           </Route>
-          <Route exact path="/login"><LoginPage activeUser={activeUser} users={users} onLogin={user => setActiveUser(user)}/></Route>
+          <Route exact path="/login"><LoginPage activeUser={activeUser} onLogin={user => setActiveUser(user)}/></Route>
           <Route exact path="/signup"><SignupPage/></Route>
           <Route exact path="/recipes">
             <RecipeNavbar activeUser={activeUser} onLogout={() => setActiveUser(null)}/>

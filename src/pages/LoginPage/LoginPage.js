@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
-import './LoginPage.css'
+import './LoginPage.css';
+import Parse from 'parse';
+import UserModel from '../../model/UserModel';
 
-function LoginPage({activeUser, users, onLogin}) {
+function LoginPage({activeUser, onLogin}) {
     const [email, setEmail] = useState("");
     const [pwd, setPwd] = useState("");
     const [showInvalidLogin, setShowInvalidLogin] = useState(false);
@@ -15,20 +17,15 @@ function LoginPage({activeUser, users, onLogin}) {
     function login(e) {
         e.preventDefault();
 
-        let activeUser = null;
-        for (const user of users) {
-            if (user.login(email, pwd)) {
-                activeUser = user;
-                break;
-            }
-        }
-
-        if (activeUser) {
+        Parse.User.logIn(email, pwd).then(parseUser => {
+            // Do stuff after successful login
+            console.log('Logged in user', parseUser);
+            const activeUser = new UserModel(parseUser);
             onLogin(activeUser);
-        } else {
+        }).catch(error => {
+            console.error('Error while logging in user', error);
             setShowInvalidLogin(true);
-        }
-
+        });
     }
 
     return (

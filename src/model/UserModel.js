@@ -1,16 +1,16 @@
 
 export default class UserModel {
-    #pwd;   // pwd is a private property
-    constructor(plainUser) {
-        this.id = plainUser.id;
-        this.fname = plainUser.fname;
-        this.lname = plainUser.lname;
-        this.email = plainUser.email;
-        this.#pwd = plainUser.pwd;
+    #parseUser  // storing the parseUser object as a private field (might need to use it)
+    constructor(parseUser) {
+        this.id = parseUser.id;
+        this.fname = parseUser.get("fname");
+        this.lname = parseUser.get("lname");
+        this.email = parseUser.get("email");
+        this.#parseUser = parseUser;
     }
 
-    login(email, pwd) {
-        return email.toLowerCase() === this.email.toLowerCase() && pwd === this.#pwd;
-    }
+    // login(email, pwd) {
+    //     return email.toLowerCase() === this.email.toLowerCase() && pwd === this.#pwd;
+    // }
 } 
 
