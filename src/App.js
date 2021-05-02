@@ -29,7 +29,7 @@ function App() {
             <HomePage/>
           </Route>
           <Route exact path="/login"><LoginPage activeUser={activeUser} onLogin={user => setActiveUser(user)}/></Route>
-          <Route exact path="/signup"><SignupPage/></Route>
+          <Route exact path="/signup"><SignupPage activeUser={activeUser} onLogin={user => setActiveUser(user)}/></Route>
           <Route exact path="/recipes">
             <RecipeNavbar activeUser={activeUser} onLogout={handleLogout} />
             <RecipesPage activeUser={activeUser} />

@@ -1,17 +1,41 @@
 import React from 'react';
 import { useState } from 'react';
 import { Alert, Button, Form } from 'react-bootstrap';
-import './SignupPage.css'
+import './SignupPage.css';
+import Parse from 'parse';
+import UserModel from '../../model/UserModel';
+import { Redirect } from 'react-router';
 
-function SignupPage() {
+function SignupPage({activeUser, onLogin}) {
     const [showSignupError, setShowSignupError] = useState(false);
     const [email, setEmail] = useState("");
     const [pwd, setPwd] = useState("");
     const [fname, setFname] = useState("");
     const [lname, setLname] = useState("");
 
-    function signup() {
+    if (activeUser) {
+        return <Redirect to="/recipes"/>
+    }
 
+    function signup(e) {
+        e.preventDefault();
+
+        // validation code is missing here...
+
+        const user = new Parse.User()
+        user.set('username', email);
+        user.set('email', email);
+        user.set('fname', fname);
+        user.set('lname', lname);
+        user.set('password', pwd);
+
+        user.signUp().then(parseUser => {
+            const activeUser = new UserModel(parseUser);
+            onLogin(activeUser);
+        }).catch(error => {
+            setShowSignupError(true);
+            console.error('Error while signing up user', error);
+        });
     }
 
     return (
