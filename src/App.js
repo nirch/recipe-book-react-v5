@@ -11,11 +11,12 @@ import { useState } from 'react';
 import recipesJSON from './data/recipes.json';
 import UserModel from './model/UserModel';
 import RecipeModel from './model/RecipeModel';
+import Parse from 'parse';
 
 
 function App() {
   const [recipes, setRecipes] = useState(recipesJSON.map(plainRecipe => new RecipeModel(plainRecipe)));
-  const [activeUser, setActiveUser] = useState(null);
+  const [activeUser, setActiveUser] = useState(Parse.User.current() ? new UserModel(Parse.User.current()) : null);
 
   function addRecipe(name, desc, img) {
     const newRecipe = new RecipeModel({
@@ -29,6 +30,10 @@ function App() {
     setRecipes(recipes.concat(newRecipe));
   }
 
+  function handleLogout() {
+    setActiveUser(null);
+    Parse.User.logOut();
+  }
 
   return (
     <>
@@ -41,7 +46,7 @@ function App() {
           <Route exact path="/login"><LoginPage activeUser={activeUser} onLogin={user => setActiveUser(user)}/></Route>
           <Route exact path="/signup"><SignupPage/></Route>
           <Route exact path="/recipes">
-            <RecipeNavbar activeUser={activeUser} onLogout={() => setActiveUser(null)}/>
+            <RecipeNavbar activeUser={activeUser} onLogout={handleLogout}/>
             <RecipesPage 
               activeUser={activeUser} 
               recipes={activeUser ? recipes.filter(recipe => recipe.userId === activeUser.id) : []}
