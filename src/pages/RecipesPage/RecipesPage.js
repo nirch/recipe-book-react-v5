@@ -8,7 +8,7 @@ import './RecipesPage.css'
 import Parse from 'parse';
 import RecipeModel from '../../model/RecipeModel';
 
-function RecipesPage({activeUser, onNewRecipe}) {
+function RecipesPage({activeUser}) {
     const [showNewRecipeModal, setShowNewRecipeModal] = useState(false);
     const [recipes, setRecipes] = useState([]);
 
@@ -28,6 +28,28 @@ function RecipesPage({activeUser, onNewRecipe}) {
         return <Redirect to="/"/>
     }
 
+    function handleNewRecipe(name, desc, imgFile) {
+        const RecipeTable = Parse.Object.extend('Recipe');
+        const newRecipe = new RecipeTable();
+
+        newRecipe.set('name', name);
+        newRecipe.set('desc', desc);
+        if (imgFile) {
+            newRecipe.set('img', new Parse.File(imgFile.name, imgFile));
+        }
+        newRecipe.set('userId', Parse.User.current());
+
+        newRecipe.save().then(parseRecipe => {
+            setRecipes(recipes.concat(new RecipeModel(parseRecipe)));
+            // setOnProgress(false);
+        }, error => {
+            console.error('Error while creating Recipe: ', error);
+             // setOnProgress(false);
+        });
+
+        // setOnProgress(true);
+    }
+
     return (
         <Container className="p-recipes">
             <div className="heading">
@@ -41,7 +63,7 @@ function RecipesPage({activeUser, onNewRecipe}) {
                     </Col>
                 )}
             </Row>
-            <NewRecipeModal show={showNewRecipeModal} onClose={() => setShowNewRecipeModal(false)} onCreate={onNewRecipe}/>
+            <NewRecipeModal show={showNewRecipeModal} onClose={() => setShowNewRecipeModal(false)} onCreate={handleNewRecipe}/>
         </Container>
     );
 }

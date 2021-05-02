@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Modal, Form, Col, Row, Image } from 'react-bootstrap';
+import { Button, Modal, Form, Col, Row, Image, Spinner } from 'react-bootstrap';
 import './NewRecipeModal.css'
 
 function NewRecipeModal({ show, onClose, onCreate }) {
@@ -15,7 +15,7 @@ function NewRecipeModal({ show, onClose, onCreate }) {
     }
 
     function createRecipe() {
-        onCreate(name, desc, img ? URL.createObjectURL(img) : "");
+        onCreate(name, desc, img);
         clearForm();
         onClose();
     }
@@ -70,7 +70,7 @@ function NewRecipeModal({ show, onClose, onCreate }) {
                 <Button variant="secondary" onClick={onClose}>
                     Cancel
                 </Button>
-                <Button variant="primary" onClick={createRecipe}>
+                <Button variant="primary" onClick={createRecipe} >
                     Create Recipe
                 </Button>
             </Modal.Footer>
