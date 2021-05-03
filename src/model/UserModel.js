@@ -10,26 +10,25 @@ export default class UserModel {
         this.#parseUser = parseUser;
     }
 
-    // login(email, pwd) {
-    //     return email.toLowerCase() === this.email.toLowerCase() && pwd === this.#pwd;
-    // }
-
+    static activeUser = null;
 
     // login is an async function that tries to login the user given the email and password.
     // If successfull it will resolve the promise with a UserModel instance of the logged in user
     // If unsuccessfull it will reject the promise with an appropriate error
     static async login(email, pwd) {
         const parseUser = await Parse.User.logIn(email, pwd);
-        const activeUser = new UserModel(parseUser);
-        return activeUser;
+        UserModel.activeUser = new UserModel(parseUser);
+        return UserModel.activeUser;
     }
 
     static logout() {
+        UserModel.activeUser = null;
         Parse.User.logOut();
     }
 
-    static activeUser() {
-        return Parse.User.current();
+    static loadActiveUser() {
+        UserModel.activeUser = Parse.User.current() ? new UserModel(Parse.User.current()) : null;
+        return UserModel.activeUser;
     }
 } 
 

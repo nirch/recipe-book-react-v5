@@ -12,7 +12,7 @@ import UserModel from './model/UserModel';
 
 
 function App() {
-  const [activeUser, setActiveUser] = useState(UserModel.activeUser() ? new UserModel(UserModel.activeUser()) : null);
+  const [activeUser, setActiveUser] = useState(UserModel.loadActiveUser());
 
   function handleLogout() {
     setActiveUser(null);
