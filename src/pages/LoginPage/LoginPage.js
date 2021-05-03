@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 import './LoginPage.css';
-import Parse from 'parse';
 import UserModel from '../../model/UserModel';
 
 function LoginPage({activeUser, onLogin}) {
@@ -14,18 +13,16 @@ function LoginPage({activeUser, onLogin}) {
         return <Redirect to="/recipes"/>
     }
 
-    function login(e) {
+    async function login(e) {
         e.preventDefault();
 
-        Parse.User.logIn(email, pwd).then(parseUser => {
-            // Do stuff after successful login
-            console.log('Logged in user', parseUser);
-            const activeUser = new UserModel(parseUser);
+        try {
+            const activeUser = await UserModel.login(email, pwd);
             onLogin(activeUser);
-        }).catch(error => {
+        } catch (error) {
             console.error('Error while logging in user', error);
             setShowInvalidLogin(true);
-        });
+        }
     }
 
     return (

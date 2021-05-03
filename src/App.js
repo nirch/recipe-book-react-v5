@@ -9,15 +9,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import RecipeNavbar from './components/RecipeNavbar/RecipeNavbar';
 import { useState } from 'react';
 import UserModel from './model/UserModel';
-import Parse from 'parse';
 
 
 function App() {
-  const [activeUser, setActiveUser] = useState(Parse.User.current() ? new UserModel(Parse.User.current()) : null);
+  const [activeUser, setActiveUser] = useState(UserModel.activeUser() ? new UserModel(UserModel.activeUser()) : null);
 
   function handleLogout() {
     setActiveUser(null);
-    Parse.User.logOut();
+    UserModel.logout();
   }
 
   return (
