@@ -17,25 +17,12 @@ function SignupPage({activeUser, onLogin}) {
         return <Redirect to="/recipes"/>
     }
 
-    function signup(e) {
+    async function signup(e) {
         e.preventDefault();
-
         // validation code is missing here...
 
-        const user = new Parse.User()
-        user.set('username', email);
-        user.set('email', email);
-        user.set('fname', fname);
-        user.set('lname', lname);
-        user.set('password', pwd);
-
-        user.signUp().then(parseUser => {
-            const activeUser = new UserModel(parseUser);
-            onLogin(activeUser);
-        }).catch(error => {
-            setShowSignupError(true);
-            console.error('Error while signing up user', error);
-        });
+        const activeUser = await UserModel.signup(email, fname, lname, pwd);
+        onLogin(activeUser);
     }
 
     return (

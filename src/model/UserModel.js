@@ -22,6 +22,19 @@ export default class UserModel {
         return UserModel.activeUser;
     }
 
+    static async signup(email, fname, lname, pwd) {
+        const user = new Parse.User()
+        user.set('username', email);
+        user.set('email', email);
+        user.set('fname', fname);
+        user.set('lname', lname);
+        user.set('password', pwd);
+
+        const parseUser = await user.signUp();
+        UserModel.activeUser = new UserModel(parseUser);
+        return UserModel.activeUser;
+    }
+
     static logout() {
         UserModel.activeUser = null;
         Parse.User.logOut();
