@@ -5,8 +5,6 @@ import { Redirect } from 'react-router';
 import NewRecipeModal from '../../components/NewRecipeModal/NewRecipeModal';
 import RecipeCard from '../../components/RecipeCard/RecipeCard';
 import './RecipesPage.css'
-import Parse from 'parse';
-import RecipeModel from '../../model/RecipeModel';
 
 function RecipesPage({activeUser}) {
     const [showNewRecipeModal, setShowNewRecipeModal] = useState(false);
@@ -28,26 +26,9 @@ function RecipesPage({activeUser}) {
         return <Redirect to="/"/>
     }
 
-    function handleNewRecipe(name, desc, imgFile) {
-        const RecipeTable = Parse.Object.extend('Recipe');
-        const newRecipe = new RecipeTable();
-
-        newRecipe.set('name', name);
-        newRecipe.set('desc', desc);
-        if (imgFile) {
-            newRecipe.set('img', new Parse.File(imgFile.name, imgFile));
-        }
-        newRecipe.set('userId', Parse.User.current());
-
-        newRecipe.save().then(parseRecipe => {
-            setRecipes(recipes.concat(new RecipeModel(parseRecipe)));
-            // setOnProgress(false);
-        }, error => {
-            console.error('Error while creating Recipe: ', error);
-             // setOnProgress(false);
-        });
-
-        // setOnProgress(true);
+    async function handleNewRecipe(name, desc, imgFile) {
+        const newRecipe = await activeUser.createRecipe(name, desc, imgFile);
+        setRecipes(recipes.concat(newRecipe));
     }
 
     return (

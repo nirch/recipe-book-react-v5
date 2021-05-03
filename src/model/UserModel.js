@@ -40,5 +40,21 @@ export default class UserModel {
         const recipes = parseRecipes.map(parseRecipe => new RecipeModel(parseRecipe));
         return recipes;
     }
+
+    async createRecipe(name, desc, img) {
+        const RecipeTable = Parse.Object.extend('Recipe');
+        const newRecipe = new RecipeTable();
+
+        newRecipe.set('name', name);
+        newRecipe.set('desc', desc);
+        if (img) {
+            newRecipe.set('img', new Parse.File(img.name, img));
+        }
+        newRecipe.set('userId', this.#parseUser);
+
+        const parseRecipe = await newRecipe.save();
+        const recipe = new RecipeModel(parseRecipe);
+        return recipe;
+    }
 } 
 
