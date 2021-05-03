@@ -1,4 +1,5 @@
 import Parse from 'parse';
+import RecipeModel from './RecipeModel';
 
 export default class UserModel {
     #parseUser  // storing the parseUser object as a private field (might need to use it)
@@ -29,6 +30,15 @@ export default class UserModel {
     static loadActiveUser() {
         UserModel.activeUser = Parse.User.current() ? new UserModel(Parse.User.current()) : null;
         return UserModel.activeUser;
+    }
+
+    async getMyRecipe() {
+        const RecipeTable = Parse.Object.extend('Recipe');
+        const query = new Parse.Query(RecipeTable);
+        query.equalTo("userId", this.#parseUser);
+        const parseRecipes = await query.find();
+        const recipes = parseRecipes.map(parseRecipe => new RecipeModel(parseRecipe));
+        return recipes;
     }
 } 
 

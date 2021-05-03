@@ -13,15 +13,13 @@ function RecipesPage({activeUser}) {
     const [recipes, setRecipes] = useState([]);
 
     useEffect(() => {
+        async function fetchData() {
+            const recipes = await activeUser.getMyRecipe();
+            setRecipes(recipes);
+        }
+        
         if (activeUser) {
-            const RecipeTable = Parse.Object.extend('Recipe');
-            const query = new Parse.Query(RecipeTable);
-            query.equalTo("userId", Parse.User.current());
-            query.find().then(parseRecipes => {
-                setRecipes(parseRecipes.map(parseRecipe => new RecipeModel(parseRecipe)));
-            }, (error) => {
-                console.error('Error while fetching Recipe', error);
-            });
+            fetchData();
         }
     }, [activeUser])
 
