@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
+import ActiveUserContext from '../../shared/ActiveUserContext';
 import './LoginPage.css'
 
-function LoginPage({activeUser, users, onLogin}) {
+function LoginPage({users, onLogin}) {
     const [email, setEmail] = useState("");
     const [pwd, setPwd] = useState("");
     const [showInvalidLogin, setShowInvalidLogin] = useState(false);
+    const activeUser = useContext(ActiveUserContext);
 
     if (activeUser) {
         return <Redirect to="/recipes"/>

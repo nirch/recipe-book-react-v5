@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Nav, Navbar } from 'react-bootstrap';
+import ActiveUserContext from '../../shared/ActiveUserContext';
 
-function RecipeNavbar({activeUser, onLogout}) {
+function RecipeNavbar({onLogout}) {
+    const activeUser = useContext(ActiveUserContext);
+
     return (
         <Navbar bg="light" expand="lg">
         <Navbar.Brand href="#/">Recipe Book</Navbar.Brand>
