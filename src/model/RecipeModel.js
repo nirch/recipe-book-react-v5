@@ -6,5 +6,6 @@ export default class RecipeModel {
         this.desc = plainRecipe.desc;
         this.img = plainRecipe.img;
         this.userId = plainRecipe.userId;
+        this.difficulty = plainRecipe.difficulty;
     }
 }
