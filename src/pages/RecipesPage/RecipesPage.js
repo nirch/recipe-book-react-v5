@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { Redirect } from 'react-router';
 import NewRecipeModal from '../../components/NewRecipeModal/NewRecipeModal';
@@ -11,40 +11,40 @@ function RecipesPage({recipes, onNewRecipe}) {
     const [showNewRecipeModal, setShowNewRecipeModal] = useState(false);
     const activeUser = useContext(ActiveUserContext);
 
+    const difficultyData = useMemo(() => {
+        console.log("calculating difficultyData");
+        let easyRecipes = 0;
+        let hardRecipes = 0;
+        for (const recipe of recipes) {
+            if (recipe.difficulty === 1) {
+                ++easyRecipes;
+            } else {
+                ++hardRecipes;
+            }
+        }
+        return {
+            labels: ['Easy', 'Hard'],
+            datasets: [
+                {
+                label: '# of Recipes',
+                data: [easyRecipes, hardRecipes],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                ],
+                borderWidth: 1,
+                },
+            ],
+        };
+    }, [recipes]);
+
     if (!activeUser) {
         return <Redirect to="/"/>
     }
-    
-    let easyRecipes = 0;
-    let hardRecipes = 0;
-    for (const recipe of recipes) {
-        if (recipe.difficulty === 1) {
-            ++easyRecipes;
-        } else {
-            ++hardRecipes;
-        }
-    }
-    const difficultyData = {
-        labels: ['Easy', 'Hard'],
-        datasets: [
-            {
-            label: '# of Recipes',
-            data: [easyRecipes, hardRecipes],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-            ],
-            borderWidth: 1,
-            },
-        ],
-    };
-      
-
-
 
     return (
         <Container className="p-recipes">
