@@ -13,6 +13,7 @@ import recipesJSON from './data/recipes.json';
 import UserModel from './model/UserModel';
 import RecipeModel from './model/RecipeModel';
 import ActiveUserContext from './shared/ActiveUserContext'
+import emailjs from 'emailjs-com';
 
 
 function App() {
@@ -31,6 +32,13 @@ function App() {
     });
     
     setRecipes(recipes.concat(newRecipe));
+
+    emailjs.send("service_99ad7q9","template_01u0a0q",{
+      recipe_name: name,
+      to_name: activeUser.fname,
+      recipe_desc: desc,
+      to_email: activeUser.email,
+    });
   }
 
 
