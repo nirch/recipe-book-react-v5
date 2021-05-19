@@ -53,9 +53,9 @@ function RecipesPage({recipes, onNewRecipe}) {
                 <Button variant="link" onClick={() => setShowNewRecipeModal(true)}>New Recipe</Button>
             </div>
             <Row>
-                {recipes.map(recipe => 
+                {recipes.map((recipe, index) => 
                     <Col key={recipe.id} md={3} sm={6}>
-                        <RecipeCard recipe={recipe}/>
+                        <RecipeCard recipe={recipe} index={index}/>
                     </Col>
                 )}
             </Row>

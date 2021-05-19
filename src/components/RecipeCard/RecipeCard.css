@@ -1,0 +1,21 @@
+
+.c-recipe {
+    height: 100%;
+    animation: falldown 3s;
+    animation-fill-mode: backwards;
+}
+
+.c-recipe > img {
+    height: 250px;
+    object-fit: cover;
+}
+
+@keyframes falldown {
+    from {
+        transform: translate(0, -100vh);
+    }
+
+    to {
+        transform: translate(0, 0);
+    }
+}

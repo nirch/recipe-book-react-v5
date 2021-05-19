@@ -1,13 +1,4 @@
 
-.p-recipes .c-recipe {
-    height: 100%;
-}
-
-.p-recipes .c-recipe > img {
-    height: 250px;
-    object-fit: cover;
-}
-
 .p-recipes > .heading {
     display: flex;
     justify-content: space-between;
